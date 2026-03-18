@@ -94,6 +94,30 @@ The app mode:
 
 Focus-only mode collapses the app into a compact view that shows only the current app and live timer.
 
+## Release builds
+
+Push a version tag to build GitHub Release assets on GitHub Actions:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The tag must match the `version` field in `package.json`.
+
+The release workflow publishes four files to the GitHub Release page:
+
+- `Waid-<version>-macos-intel.zip`
+- `Waid-<version>-macos-intel.dmg`
+- `Waid-<version>-macos-apple-silicon.zip`
+- `Waid-<version>-macos-apple-silicon.dmg`
+
+The current release artifacts are unsigned and not notarized.
+
+- Users can still download the `.zip` or `.dmg` from GitHub Release.
+- The `.dmg` should still mount normally.
+- macOS may block `Waid.app` on first launch until the user explicitly allows it in `System Settings > Privacy & Security`.
+
 ## Alternative start
 
 ```bash

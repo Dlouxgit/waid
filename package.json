@@ -22,6 +22,7 @@
     "dev": "node server.js",
     "dev:web": "node server.js",
     "dev:app": "./scripts/dev-app.sh",
-    "build:app": "./scripts/build-app.sh"
+    "build:app": "./scripts/build-app.sh",
+    "build:release": "./scripts/build-release.sh"
   }
 }
