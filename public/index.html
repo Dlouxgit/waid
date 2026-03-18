@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Waid</title>
     <link rel="icon" type="image/png" href="./favicon.png" />
+    <script>
+      {
+        const params = new URLSearchParams(window.location.search);
+        document.documentElement.dataset.focusMode =
+          params.get("focusOnly") === "1" ? "true" : "false";
+      }
+    </script>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -27,7 +34,7 @@
       </header>
 
       <section class="overview-grid">
-        <article class="panel current-panel">
+        <article class="panel current-panel" id="current-panel">
           <p class="section-label">Current Focus</p>
           <h2 id="current-app">Waiting for app activity</h2>
           <p class="muted" id="current-meta">Waid is preparing the local tracker.</p>

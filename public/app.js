@@ -1,5 +1,6 @@
 import { connectDashboard } from "./transport.js";
 
+const rootElement = document.documentElement;
 const connectionPill = document.querySelector("#connection-pill");
 const currentApp = document.querySelector("#current-app");
 const currentMeta = document.querySelector("#current-meta");
@@ -10,6 +11,17 @@ const appList = document.querySelector("#app-list");
 const sessionList = document.querySelector("#session-list");
 
 let latestSnapshot = null;
+
+function setFocusMode(enabled) {
+  rootElement.dataset.focusMode = enabled ? "true" : "false";
+}
+
+window.WaidDashboard = {
+  ...(window.WaidDashboard ?? {}),
+  setFocusMode,
+};
+
+setFocusMode(rootElement.dataset.focusMode === "true");
 
 function appKey(entry) {
   return entry.bundleIdentifier ?? entry.appName ?? "unknown-app";

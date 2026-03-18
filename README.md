@@ -21,6 +21,10 @@ You can use Waid in two ways:
 - Shows the app you are using right now
 - Aggregates today's time by app
 - Keeps a session timeline for the day
+- Builds as a native macOS app with the same dashboard UI
+- Supports `Pin Window on Top` in app mode
+- Supports a compact `Current Focus` only mode in app mode
+- Remembers app window pin/focus state between launches
 - Pauses tracking when the session is inactive or the screen sleeps
 - Stores data locally in JSON
 - Runs without full Xcode
@@ -84,7 +88,11 @@ The app mode:
 - does not require Node at runtime
 - does not use `localhost`
 - loads the dashboard UI from the app bundle
+- includes native titlebar controls for pinning and focus-only mode
+- remembers the pin and focus-only window state between launches
 - stores data in `~/Library/Application Support/Waid/usage-data.json`
+
+Focus-only mode collapses the app into a compact view that shows only the current app and live timer.
 
 ## Alternative start
 
@@ -104,14 +112,14 @@ node server.js
 
 - A native macOS shell uses `WKWebView` to load the bundled dashboard UI.
 - The app listens for frontmost app changes directly through `NSWorkspace`.
-- The app pushes snapshot updates into the UI bridge without `SSE` or a local HTTP server.
+- The bundled UI reads snapshots from the native shell through the local `waid://` app scheme.
 - Data is stored in `~/Library/Application Support/Waid/usage-data.json`.
 
 ## Privacy
 
 Waid is local-first.
 
-- Data stays in this folder under `data/`.
+- Data stays on your Mac in `~/Library/Application Support/Waid/usage-data.json`.
 - The app only listens for the frontmost app name and bundle identifier.
 - It does not inspect what you do inside an app.
 - It does not collect URLs, window titles, keystrokes, or screen content.
@@ -122,6 +130,7 @@ See [PRIVACY.md](./PRIVACY.md) for the exact data model and local-network behavi
 
 - The first web launch compiles the Swift helper and can take around 20 seconds.
 - The app build also requires `swiftc` from Apple's Command Line Tools.
+- If the app window seems to keep an old icon or titlebar layout, fully quit `Waid` and reopen it.
 - The tracker stops counting when the session becomes inactive or the screen sleeps.
 - If the process exits unexpectedly, Waid recovers the last active session up to the most recent heartbeat it saved.
 - If `swiftc` is missing, run `xcode-select --install`.
