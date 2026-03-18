@@ -1,3 +1,5 @@
+import { connectDashboard } from "./transport.js";
+
 const connectionPill = document.querySelector("#connection-pill");
 const currentApp = document.querySelector("#current-app");
 const currentMeta = document.querySelector("#current-meta");
@@ -223,24 +225,20 @@ function setDisconnected() {
   connectionPill.dataset.state = "offline";
 }
 
-function connect() {
-  const source = new EventSource("/events");
+connectDashboard({
+  onSnapshot(snapshot) {
+    render(snapshot);
+  },
+  onStatus(status) {
+    if (status === "live") {
+      connectionPill.textContent = "Live";
+      connectionPill.dataset.state = "live";
+      return;
+    }
 
-  source.onopen = () => {
-    connectionPill.textContent = "Live";
-    connectionPill.dataset.state = "live";
-  };
-
-  source.onmessage = (event) => {
-    render(JSON.parse(event.data));
-  };
-
-  source.onerror = () => {
     setDisconnected();
-  };
-}
-
-connect();
+  },
+});
 
 setInterval(() => {
   updateLiveMetrics(latestSnapshot);

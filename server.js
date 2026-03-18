@@ -4,13 +4,14 @@ import { access } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { usageDataFilePath } from "./src/paths.js";
 import { UsageStore } from "./src/store.js";
 import { TrackerService } from "./src/tracker.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, "public");
-const dataFilePath = path.join(__dirname, "data", "usage-data.json");
+const dataFilePath = usageDataFilePath();
 const host = "127.0.0.1";
 const port = Number.parseInt(process.env.PORT ?? "4312", 10);
 

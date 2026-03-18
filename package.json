@@ -19,6 +19,9 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "dev:web": "node server.js",
+    "dev:app": "./scripts/dev-app.sh",
+    "build:app": "./scripts/build-app.sh"
   }
 }
